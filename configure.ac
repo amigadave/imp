@@ -1,0 +1,45 @@
+AC_INIT([IMP Metadata Project], [0.1], [amigadave@hotmail.com], [imp])
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_SRCDIR([src/imp.cpp])
+#AC_CONFIG_MACRO_DIR([m4])
+AC_PREREQ(2.57)
+AC_CONFIG_HEADERS([config.h])
+
+AM_INIT_AUTOMAKE([-Wall -Werror dist-bzip2])
+
+AC_PROG_CC
+AC_PROG_CXX
+AC_PROG_INSTALL
+
+AC_MSG_CHECKING(whether to build with debugging information)
+debugger=no
+AC_ARG_ENABLE(debug,AC_HELP_STRING([--enable-debug],[enable debugging symbols and messages (default=no)]),debugger="$enableval")
+AC_MSG_RESULT($debugger)
+if test x"$debugger" = x"yes"; then
+	AC_DEFINE(DEBUG, 1, [Define to enable debugging symbols and messages])
+	DEBUG_CFLAGS="-g -Werror"
+	DEBUG_CXXFLAGS="-g -Werror"
+	AC_SUBST([CFLAGS], $DEBUG_CFLAGS)
+	AC_SUBST([CXXFLAGS], $DEBUG_CFLAGS)
+fi
+
+MY_CFLAGS="-Wall -DGTK_DISABLE_DEPRECATED=1 -DGDK_DISABLE_DEPRECATED=1 -DGDK_PIXBUF_DISABLE_DEPRECATED=1 -DG_DISABLE_DEPRECATED=1 -DGLIBMM_DISABLE_DEPRECATED=1 -DGTKMM_DISABLE_DEPRECATED=1"
+AC_SUBST(MY_CFLAGS)
+
+GTKMM_MODULES="gtkmm-2.4 >= 2.12 glibmm-2.4 >= 2.14 giomm-2.4"
+PKG_CHECK_MODULES(GTKMM, $GTKMM_MODULES)
+AC_SUBST(GTKMM_CFLAGS)
+AC_SUBST(GTKMM_LIBS)
+
+EXIV2_MODULES="exiv2 >= 0.17"
+PKG_CHECK_MODULES(EXIV2, $EXIV2_MODULES)
+AC_SUBST(EXIV2_CFLAGS)
+AC_SUBST(GTKMM_LIBS)
+
+SQLITE_MODULES="sqlite3"
+PKG_CHECK_MODULES(SQLITE, $SQLITE_MODULES)
+AC_SUBST(SQLITE_CFLAGS)
+AC_SUBST(SQLITE_LIBS)
+
+AC_CONFIG_FILES([Makefile src/Makefile])
+AC_OUTPUT

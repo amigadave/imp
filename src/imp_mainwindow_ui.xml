@@ -1,0 +1,18 @@
+<ui>
+<menubar name="m_menubar">
+	<menu name="m_file_menu" action="FileMenu">
+		<menuitem name="Add" action="FileAdd"/>
+		<separator/>
+		<menuitem name="Quit" action="FileQuit"/>
+	</menu>
+	<menu name="m_edit_menu" action="EditMenu">
+		<menuitem name="Preferences" action="EditPreferences"/>
+	</menu>
+	<menu name="m_help_menu" action="HelpMenu">
+		<menuitem name="About" action="HelpAbout"/>
+	</menu>
+</menubar>
+<toolbar name="m_toolbar">
+	<toolitem action="FileAdd"/>
+</toolbar>
+</ui>

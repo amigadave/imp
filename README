@@ -1,0 +1,12 @@
+IMP Metadata Project
+
+A project to add metadata to files and index them in a searchable database. For installation instructions, refer to INSTALL.
+
+See also:
+DCMI http://dublincore.org/
+Exiv2 http://www.exiv2.org/
+Gtkmm, Glibmm, Giomm http://www.gtkmm.org/
+ISO 15836:2003 http://www.iso.org/iso/iso_catalogue/catalogue_tc/catalogue_detail.htm?csnumber=37629
+ISO 8601:2004 http://www.iso.org/iso/catalogue_detail?csnumber=40874
+SQLite http://www.sqlite.org/
+XMP http://www.adobe.com/products/xmp/index.html

@@ -1,0 +1,7 @@
+To install IMP, the magic incantation:
+
+./configure
+make
+make install
+
+should work providing that you have recent version of gtkmm, exiv2 and sqlite.
