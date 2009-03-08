@@ -1,5 +1,10 @@
 2009-03-08  David King  <amigadave@gmail.com>
 
+	* data/imp_mainwindow_ui.xml: Move from src/.
+	* src/*.[cpp|h]: Remove executable bit.
+
+2009-03-08  David King  <amigadave@gmail.com>
+
 	* .gitignore: New file.
 	* AUTHORS, COPYING, ChangeLog, INSTALL, NEWS, README: Remove
 	executable bit.
