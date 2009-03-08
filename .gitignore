@@ -1,0 +1,19 @@
+# object files
+*.o
+# Compiled binaries
+src/imp
+# Makefiles
+Makefile
+Makefile.in
+# configure script
+configure
+config.*
+# Vim temporary files
+*.swp
+# others
+.deps
+.dirstamp
+aclocal.m4
+autom4te.cache
+build-aux
+stamp-h1

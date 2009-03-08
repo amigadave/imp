@@ -1,3 +1,15 @@
-IMP Metadata project 0.1 - 20081010
+2009-03-08  David King  <amigadave@gmail.com>
 
-First version
+	* .gitignore: New file.
+	* AUTHORS, COPYING, ChangeLog, INSTALL, NEWS, README: Remove
+	executable bit.
+	* autogen.sh: Add autogen script.
+	* configure.ac, Makefile.am: Alter for non-recursive make.
+
+2009-01-20  David King  <amigadave@gmail.com>
+
+	* Initial commit.
+
+2008-10-10  David King  <amigadave@gmail.com>
+
+	* First version.
