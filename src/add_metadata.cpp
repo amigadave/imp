@@ -20,7 +20,7 @@
  * Class for adding metadata to images.
  */
 
-#include "config.h"
+#include <config.h>
 #include "add_metadata.h"
 
 /** Class for adding metadata to images.
@@ -59,9 +59,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 	a_button_cancel(Gtk::Stock::CANCEL),
 	a_button_save(Gtk::Stock::SAVE)
 {
-	#ifdef DEBUG
-	std::cout << "Add Metadata constructed for " << file->get_path() << std::endl;
-	#endif
 	set_title("Add metadata");
 	set_border_width(12);
 	set_default_size(400, 300);
@@ -186,9 +183,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 	a_file = file;
 	Exiv2::Image::AutoPtr image = Exiv2::ImageFactory::open(a_file->get_path());
 	image->readMetadata();
-	#ifdef DEBUG
-	std::cout << a_file->get_basename() << ": Metadata read from file" << std::endl;
-	#endif
 	Exiv2::XmpData &xmpdata = image->xmpData();
 			
 	// Get file name, prefix and suffix
@@ -201,9 +195,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 	if(xmpdata.empty())
 	{
 		// No XMP data found, set title to filename
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": No XMP data found, title set to filename" << std::endl;
-		#endif
 		a_entry_title.set_text(file_name);
 	}
 	else
@@ -215,9 +206,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		{
 			// Key not found, set title entry to filename
 			a_entry_title.set_text(file_name);
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.title not found, setting to file name" << std::endl;
-			#endif
 		}
 		else
 		{
@@ -228,9 +216,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 			int dot_pos = title.find_last_of(".", title.size());
 			title = title.erase(dot_pos);
 			a_entry_title.set_text(title);
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.title is \"" << title << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_entry_date
@@ -240,17 +225,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		{
 			// Key not found, leave date entry blank
 			/* TODO: attempt to guess from location in directory tree */
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.date not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.dc.date"];
 			a_entry_date.set_text(Glib::ustring (tag.toString()));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.date is \"" << a_entry_date.get_text() << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_cbet_creator
@@ -258,17 +237,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.creator not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.dc.creator"];
 			a_cbet_creator.set_active_text(Glib::ustring (tag.toString()));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.creator is \"" << a_cbet_creator.get_active_text() << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_cbet_owner
@@ -276,17 +249,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": xmp.xmpRights.Owner not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.xmpRights.Owner"];
 			a_cbet_owner.set_active_text(Glib::ustring (tag.toString()));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.xmpRights.Owner is \"" << a_cbet_owner.get_active_text() << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_cbet_rights
@@ -294,17 +261,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.rights not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.dc.rights"];
 			a_cbet_rights.set_active_text(Glib::ustring (tag.toString(0)));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.rights is \"" << a_cbet_rights.get_active_text() << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_entry_identifier
@@ -312,17 +273,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.identifier not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.dc.identifier"];
 			a_entry_identifier.set_text(Glib::ustring (tag.toString()));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.identifier is \"" << a_entry_identifier.get_text() << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_cbet_source
@@ -330,17 +285,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.source not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.dc.source"];
 			a_cbet_source.set_active_text(Glib::ustring (tag.toString()));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.source is \"" << a_cbet_source.get_active_text() << std::endl;
-			#endif
 		}
 
 		//Set a_cbet_format
@@ -348,17 +297,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.format not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.dc.format"];
 			a_cbet_format.set_active_text(Glib::ustring (tag.toString()));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.format is \"" << a_cbet_format.get_active_text() << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_entry_subject
@@ -366,9 +309,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.subject not found" << std::endl;
-			#endif
 		}
 		else
 		{
@@ -385,9 +325,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 				}
 			}
 			a_entry_subject.set_text(Glib::ustring (subject));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.subject is \"" << a_entry_subject.get_text() << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_textbuffer_description
@@ -395,17 +332,11 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.description not found" << std::endl;
-			#endif
 		}
 		else
 		{
 			Exiv2::Xmpdatum& tag = xmpdata["Xmp.dc.description"];
 			a_textbuffer_description->set_text(Glib::ustring (tag.toString(0)));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.description is \"" << a_textbuffer_description->get_text(false) << "\"" << std::endl;
-			#endif
 		}
 
 		// Set a_textbuffer_contributors
@@ -413,9 +344,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 		pos = xmpdata.findKey(key);
 		if(pos == xmpdata.end())
 		{
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.contributors not found" << std::endl;
-			#endif
 		}
 		else
 		{
@@ -432,9 +360,6 @@ AddMetadata::AddMetadata(Glib::RefPtr<Gio::File>& file) :
 				}
 			}
 			a_textbuffer_contributors->set_text(Glib::ustring (contributors));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.contributors is \"" << a_textbuffer_contributors->get_text(false) << "\"" << std::endl;
-			#endif
 		}
 	}
 
@@ -449,9 +374,6 @@ AddMetadata::~AddMetadata()
  */
 void AddMetadata::on_button_cancel_clicked()
 {
-	#ifdef DEBUG
-	std::cout << "Cancel button clicked in Add Metadata window" << std::endl;
-	#endif
 	this->hide();
 }
 
@@ -460,9 +382,6 @@ void AddMetadata::on_button_cancel_clicked()
  */
 void AddMetadata::on_button_save_clicked()
 {
-	#ifdef DEBUG
-	std::cout << "Save button clicked in Add Metadata window" << std::endl;
-	#endif
 	Exiv2::XmpData xmpdata; /**< XmpData object for writing XMP to file */
 
 	/* Xmp.dc.title may only contain alphanumerics and underscores */
@@ -480,16 +399,10 @@ void AddMetadata::on_button_save_clicked()
 			else
 			{
 				a_entry_title.grab_focus();
-				#ifdef DEBUG
-				std::cout << a_file->get_basename() << ": Invalid character in title entry field" << std::endl;
-				#endif
 				return;
 			}
 		}
 	xmpdata["Xmp.dc.title"] = std::string(test + std::string(a_file_suffix));
-	#ifdef DEBUG
-	std::cout << a_file->get_basename() << ": Xmp.dc.title set to \"" << test << a_file_suffix << "\"" << std::endl;
-	#endif
 	}
 
 
@@ -501,77 +414,47 @@ void AddMetadata::on_button_save_clicked()
 		if(date.valid())
 		{
 			xmpdata["Xmp.dc.date"] = std::string(date.format_string("%F"));
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Xmp.dc.date set to \"" << date.format_string("%F") << "\"" << std::endl;
-			#endif
 		}
 		else
 		{
 			a_entry_date.grab_focus();
-			#ifdef DEBUG
-			std::cout << a_file->get_basename() << ": Invalid character in date entry field" << std::endl;
-			#endif
 		}
 	}
 
 	{
 		xmpdata["Xmp.dc.creator"] = std::string(a_cbet_creator.get_active_text());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.creator set to \"" << a_cbet_creator.get_active_text() << "\"" << std::endl;
-		#endif
 	}
 
 	{
 		xmpdata["Xmp.xmpRights.Owner"] = std::string(a_cbet_owner.get_active_text());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.xmpRights.Owner set to \"" << a_cbet_owner.get_active_text() << "\"" << std::endl;
-		#endif
 	}
 
 	{
 		xmpdata["Xmp.dc.rights"] = std::string(a_cbet_rights.get_active_text());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.rights set to \"" << a_cbet_rights.get_active_text() << "\"" << std::endl;
-		#endif
 	}
 	
 	/* TODO: Have this set by a config option */
 	{
 		xmpdata["Xmp.dc.publisher"] = "Archives, Library and Learning Centre, University of Bath";
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.publisher set to \"" << "Archives, Library and Learning Centre, University of Bath" << std::endl;
-		#endif
 	}
 
 	{
 		xmpdata["Xmp.dc.identifier"] = std::string(a_entry_identifier.get_text());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.identifier set to \"" << a_entry_identifier.get_text() << "\"" << std::endl;
-		#endif
 	}
 
 	{
 		xmpdata["Xmp.dc.source"] = std::string(a_cbet_source.get_active_text());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.source set to \"" << a_cbet_source.get_active_text() << "\"" << std::endl;
-		#endif
 	}
 
 	/* TODO: Use MIME-type and remove UI option */
 	{
 		xmpdata["Xmp.dc.format"] = std::string(a_cbet_format.get_active_text());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.format set to \"" << a_cbet_format.get_active_text() << "\"" << std::endl;
-		#endif
 	}
 
 	/* Xmp.dc.subject is an unordered array of "keywords" */
 	{
 		Glib::ustring keywords = a_entry_subject.get_text();
 		keywords.lowercase();
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": a_entry_subject source text \"" << keywords << "\"" << std::endl;
-		#endif
 		Exiv2::Value::AutoPtr subject = Exiv2::Value::create(Exiv2::xmpBag);
 		if(keywords.find(',', 0) != keywords.npos)
 		{
@@ -634,25 +517,16 @@ void AddMetadata::on_button_save_clicked()
 		}
 
 		xmpdata.add(Exiv2::XmpKey("Xmp.dc.subject"), subject.get());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.subject set to \"" << subject->toString() << "\"" << std::endl;
-		#endif
 	}
 
 	/* Xmp.dc.description is of type LangAlt */
 	{
 		xmpdata["Xmp.dc.description"] = std::string(a_textbuffer_description->get_text(false));
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.description set to \"" << a_textbuffer_description->get_text(false) << "\"" << std::endl;
-		#endif
 	}
 
 	/* Xmp.dc.contributors is of type XmpBag */
 	{
 		Glib::ustring contributors = a_textbuffer_contributors->get_text(false);
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": a_textbuffer_contributors source text \"" << a_textbuffer_contributors->get_text(false) << "\"" << std::endl;
-		#endif
 		Exiv2::Value::AutoPtr xmpcontributors = Exiv2::Value::create(Exiv2::xmpBag);
 		
 		if(contributors.find("\n", 0) != contributors.npos)
@@ -707,9 +581,6 @@ void AddMetadata::on_button_save_clicked()
 		}
 
 		xmpdata.add(Exiv2::XmpKey("Xmp.dc.contributors"), xmpcontributors.get());
-		#ifdef DEBUG
-		std::cout << a_file->get_basename() << ": Xmp.dc.contributors set to \"" << xmpcontributors->toString() << "\"" << std::endl;
-		#endif
 		
 	}
 	
@@ -730,9 +601,6 @@ void AddMetadata::on_button_save_clicked()
 	image->setXmpData(xmpdata);
 	/* TODO: allow writing to sidecar .xmp file */
 	image->writeMetadata();
-	#ifdef DEBUG
-	std::cout << "Metadata written to " << a_file->get_path() << std::endl;
-	#endif
 
 	/*if(file_destination->query_exists())
 	{

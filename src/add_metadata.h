@@ -16,22 +16,25 @@
  * along with IMP.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef _IMP_ADDMETADATA_H
+#define _IMP_ADDMETADATA_H
+
+#include <config.h>
 #include <gtkmm.h>
 #include <giomm.h>
 #include <exiv2/image.hpp>
 #include <exiv2/xmp.hpp>
 #include <string>
-#include <iostream>
 
 class AddMetadata : public Gtk::Window
 {
 	public:
-		AddMetadata(Glib::RefPtr<Gio::File>& file);
-		virtual ~AddMetadata();
+		explicit AddMetadata(Glib::RefPtr<Gio::File>& file);
+		~AddMetadata();
 	
-	protected:
-		virtual void on_button_cancel_clicked(),
-			     on_button_save_clicked();
+	private:
+		void on_button_cancel_clicked();
+		void on_button_save_clicked();
 
 		Gtk::VBox a_vbox;
 		Gtk::Label a_label_header,
@@ -70,3 +73,5 @@ class AddMetadata : public Gtk::Window
 		Glib::RefPtr<Gtk::TextBuffer> a_textbuffer_description,
 					      a_textbuffer_contributors;
 };
+
+#endif /* _IMP_ADDMETADATA_H */

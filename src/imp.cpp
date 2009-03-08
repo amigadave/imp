@@ -20,7 +20,7 @@
  * IMP Metadata Project - A program to catalogue a collection of images.
  */
 
-#include "config.h"
+#include <config.h>
 #include "main_window.h"
 #include <gtkmm/main.h>
 
@@ -35,9 +35,6 @@ int main(int argc, char *argv[])
 
 	MainWindow main_window;
 
-	#ifdef DEBUG
-	std::cout << "GTK+ main loop initialising for Main Window" << std::endl;
-	#endif
 	Gtk::Main::run(main_window);
 
 	return 0;

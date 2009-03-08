@@ -1,5 +1,12 @@
 2009-03-08  David King  <amigadave@gmail.com>
 
+	* src/*.h: Make protected class members private. Change "config.h" to
+	<config.h>. Add include guards. Trim use of virtual keyword. Use
+	explicit for single-argument constructors.
+	* src/*.cpp: Remove DEBUG ifdefs. 
+
+2009-03-08  David King  <amigadave@gmail.com>
+
 	* data/imp_mainwindow_ui.xml: Move from src/.
 	* src/*.[cpp|h]: Remove executable bit.
 

@@ -20,25 +20,20 @@
  * Class for main window of program.
  */
 
-#include "config.h"
+#include <config.h>
 #include "main_window.h"
 
 /* Constructor for main window.
  */
 MainWindow::MainWindow() :
 	m_count(1),
-	m_file_config(),
-	m_vbox(false, 0),
-	m_treeview()
+	m_vbox(false, 0)
 {
 	set_title(PACKAGE_STRING);
 	set_default_size(200, 200);
 
 	// Configuration file
 	m_file_config = Gio::File::create_for_path(Glib::get_user_config_dir() + "/imp.conf");
-	#ifdef IMP_DEUG
-	std::cout << "Using " << m_file_config->get_path() << " as config file" << std::endl;
-	#endif
 	if(m_file_config->query_exists())
 	{
 		// Read from config file
@@ -69,9 +64,6 @@ MainWindow::MainWindow() :
 		m_config_source_dir = Glib::get_home_dir();
 		m_config_destination_dir = Glib::get_home_dir();
 	}
-	#ifdef DEBUG
-	std::cout << "Set " << m_config_source_dir << " as image source directory" << std::endl << "Set " << m_config_destination_dir << " as image destination directory" << std::endl;
-	#endif
 
 	// TODO: Status bar
 	m_context_id = m_statusbar.get_context_id(PACKAGE_STRING);
@@ -91,10 +83,8 @@ MainWindow::MainWindow() :
 	m_uimanager = Gtk::UIManager::create();
 	m_uimanager->insert_action_group(m_actiongroup);
 	add_accel_group(m_uimanager->get_accel_group());
+	// TODO: Load uimanager file from correct location.
 	m_uimanager->add_ui_from_file("imp_mainwindow_ui.xml");
-	#ifdef DEBUG
-	std::cout << "UIManager for mainwindow loaded" << std::endl;
-	#endif
 	Gtk::Widget* m_menubar = m_uimanager->get_widget("/m_menubar");
 	Gtk::Widget* m_toolbar = m_uimanager->get_widget("/m_toolbar");
 
@@ -111,9 +101,6 @@ MainWindow::MainWindow() :
 
 	add(m_vbox);
 
-	#ifdef DEBUG
-	std::cout << "Main Window loaded" << std::endl;
-	#endif
 	show_all_children();
 }
 
@@ -125,9 +112,6 @@ MainWindow::~MainWindow()
  */
 void MainWindow::on_file_add()
 {
-	#ifdef DEBUG
-	std::cout << "File->Add activated in Main Window" << std::endl;
-	#endif
 	Gtk::FileChooserDialog dialog("Select a file",
 		Gtk::FILE_CHOOSER_ACTION_OPEN);
 	dialog.set_transient_for(*this);
@@ -159,9 +143,6 @@ void MainWindow::on_file_add()
 		}
 		case(Gtk::RESPONSE_CANCEL):
 		{
-			#ifdef DEBUG
-			std::cout << "Cancel clicked in Add Metadata dialog" << std::endl;
-			#endif
 			break;
 		}
 		default:
@@ -176,9 +157,6 @@ void MainWindow::on_file_add()
  */
 void MainWindow::on_file_quit()
 {
-	#ifdef DEBUG
-	std::cout << "File->Quit activated in Main Window" << std::endl;
-	#endif
 	hide();
 }
 
@@ -186,20 +164,13 @@ void MainWindow::on_file_quit()
  */
 void MainWindow::on_edit_preferences()
 {
-	#ifdef DEBUG
-	std::cout << "Edit->Preferences activated in Main Window" << std::endl;
-	#endif
 	// TODO: Preferences dialog
-	;
 }
 
 /** Function for displaying about dialog.
  */
 void MainWindow::on_help_about()
 {
-	#ifdef DEBUG
-	std::cout << "Help->About activated in Main Window" << std::endl;
-	#endif
 	Gtk::AboutDialog dialog;
 	dialog.set_program_name(PACKAGE_NAME);
         dialog.set_version(PACKAGE_VERSION);
@@ -219,9 +190,6 @@ void MainWindow::on_help_about()
 Glib::RefPtr<Gio::File>& MainWindow::get_source_directory()
 {
 	m_file = Gio::File::create_for_path(m_config_source_dir);
-	#if DEBUG
-	std::cout << "Image source directory: " << m_file->get_path() << std::endl;
-	#endif
 	return(m_file);
 }
 
@@ -230,8 +198,5 @@ Glib::RefPtr<Gio::File>& MainWindow::get_source_directory()
 Glib::RefPtr<Gio::File>& MainWindow::get_destination_directory()
 {
 	m_file = Gio::File::create_for_path(m_config_destination_dir);
-	#if DEBUG
-	std::cout << "Image destination directory: " << m_file->get_path() << std::endl;
-	#endif
 	return(m_file);
 }

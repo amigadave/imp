@@ -20,6 +20,10 @@
  * Prototypes for main_window.cpp
  */
 
+#ifndef _IMP_MAINWINDOW_H
+#define _IMP_MAINWINDOW_H
+
+#include <config.h>
 #include <gtkmm.h>
 #include <giomm.h>
 #include "add_metadata.h"
@@ -28,13 +32,13 @@ class MainWindow : public Gtk::Window
 {
 	public:
 		MainWindow();
-		virtual ~MainWindow();
+		~MainWindow();
 	
-	protected:
-		virtual void on_file_add(),
-			     on_file_quit(),
-			     on_edit_preferences(),
-			     on_help_about();
+	private:
+		void on_file_add();
+		void on_file_quit();
+		void on_edit_preferences();
+		void on_help_about();
 		
 		virtual Glib::RefPtr<Gio::File>& get_source_directory();
 		virtual Glib::RefPtr<Gio::File>& get_destination_directory();
