@@ -1,3 +1,9 @@
+2009-03-14  David King  <amigadave@gmail.com>
+
+	* Makefile.am:
+	* src/*.cpp: Move .cpp files to .cc.
+	* AUTHORS: Add email addresses.
+
 2009-03-08  David King  <amigadave@gmail.com>
 
 	* src/*.h: Make protected class members private. Change "config.h" to
