@@ -1,5 +1,9 @@
 2009-03-14  David King  <amigadave@gmail.com>
 
+	* src/*.[cpp|h]: Indent two spaces.
+
+2009-03-14  David King  <amigadave@gmail.com>
+
 	* Makefile.am:
 	* src/*.cpp: Move .cpp files to .cc.
 	* AUTHORS: Add email addresses.
