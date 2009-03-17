@@ -37,6 +37,7 @@ MainWindow::MainWindow() :
   if(m_file_config->query_exists())
   {
     // Read from config file
+    // TODO: Fix ugly chained try, catch.
     m_keyfile_config.load_from_file(m_file_config->get_path());
     try
     {
@@ -112,8 +113,7 @@ MainWindow::~MainWindow()
 */
 void MainWindow::on_file_add()
 {
-  Gtk::FileChooserDialog dialog("Select a file",
-      Gtk::FILE_CHOOSER_ACTION_OPEN);
+  Gtk::FileChooserDialog dialog("Select a file", Gtk::FILE_CHOOSER_ACTION_OPEN);
   dialog.set_transient_for(*this);
 
   dialog.add_button(Gtk::Stock::CANCEL, Gtk::RESPONSE_CANCEL);

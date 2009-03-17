@@ -57,3 +57,5 @@ class MainWindow : public Gtk::Window
     Glib::ustring m_config_source_dir,
       m_config_destination_dir;
 };
+
+#endif /* _IMP_MAINWINDOW_H */

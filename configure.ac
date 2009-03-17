@@ -1,6 +1,6 @@
 AC_INIT([IMP Metadata Project], [0.1], [amigadave@hotmail.com], [imp])
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_SRCDIR([src/imp.cpp])
+AC_CONFIG_SRCDIR([src/imp.cc])
 #AC_CONFIG_MACRO_DIR([m4])
 AC_PREREQ(2.57)
 AC_CONFIG_HEADERS([config.h])
@@ -42,5 +42,5 @@ PKG_CHECK_MODULES(SQLITE, $SQLITE_MODULES)
 AC_SUBST(SQLITE_CFLAGS)
 AC_SUBST(SQLITE_LIBS)
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

@@ -1,3 +1,9 @@
+2009-03-17  David King  <amigadave@gmail.com>
+
+	* Makefile.am: Fix build for recursive make.
+	* configure.ac: Fix AC_CONFIG_SRCDIR and AC_CONFIG_FILES.
+	* src/main_window.h: Add missing #endif.
+
 2009-03-14  David King  <amigadave@gmail.com>
 
 	* src/*.[cpp|h]: Indent two spaces.
